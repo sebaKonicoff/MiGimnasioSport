@@ -12,28 +12,27 @@ import java.util.List;
 
 @Entity
 @Table(name = "ejercicio")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idEjercicio")
 public class Ejercicio {
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonIgnore
     private long idEjercicio;
     private String nombre;
     private String descripcion;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "ejercicio_maquina", joinColumns = {@JoinColumn(name = "idEjercicio")},
-    inverseJoinColumns = {@JoinColumn(name = "idMaquina")})
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idEjercicio")
+                inverseJoinColumns = {@JoinColumn(name = "idMaquina")})
     private List<Maquina> maquinas = new ArrayList<>();
 
     public Ejercicio(){
 
     }
 
-    public Ejercicio(long idEjercicio, String nombre, String descripcion, List<Maquina> maquinas) {
+    public Ejercicio(long idEjercicio, String nombre, String descripcion) {
         this.idEjercicio = idEjercicio;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.maquinas = maquinas;
     }
 
     public long getIdEjercicio() {

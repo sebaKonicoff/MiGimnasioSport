@@ -4,6 +4,7 @@ import com.migimnasio.sport.models.Maquina;
 import com.migimnasio.sport.services.MaquinaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,8 +41,8 @@ public class MaquinaController {
         }
     }
 
-    @PostMapping(consumes = {"application/json", "application/json;charset=UTF-8"}, produces = "application/json")
-    private ResponseEntity<Maquina> createMaquina(@RequestBody Maquina newMaquina, UriComponentsBuilder ucb) {
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    private ResponseEntity<Maquina> createMaquina(@Valid @RequestBody Maquina newMaquina, UriComponentsBuilder ucb) {
         Maquina maquina = maquinaService.createMaquina(newMaquina);
         URI uriMaquina = ucb.path("/api/maquinas/{id}").buildAndExpand(maquina.getIdMaquina()).toUri();
         return ResponseEntity.status(HttpStatus.CREATED).location(uriMaquina).body(maquina);

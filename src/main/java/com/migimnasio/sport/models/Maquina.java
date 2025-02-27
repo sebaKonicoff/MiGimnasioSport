@@ -1,39 +1,40 @@
 package com.migimnasio.sport.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
+import com.migimnasio.sport.enums.MaquinaEstado;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "maquina")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idMaquina")
 public class Maquina {
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonIgnore
     private long idMaquina;
     private String nombre;
     private String muscoObjetivo;
     private String descripcion;
-    private String estado;
+    @Enumerated(EnumType.STRING)
+    private MaquinaEstado estado;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "maquinas", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<Ejercicio> ejercicios;
 
     public Maquina(){
 
     }
 
-    public Maquina(long idMaquina, String nombre, String muscoObjetivo, String descripcion, String estado, List<Ejercicio> ejercicios) {
+    public Maquina(long idMaquina, String nombre, String muscoObjetivo, String descripcion, MaquinaEstado estado) {
         this.idMaquina = idMaquina;
         this.nombre = nombre;
         this.muscoObjetivo = muscoObjetivo;
         this.descripcion = descripcion;
         this.estado = estado;
-        this.ejercicios = ejercicios;
     }
 
     public long getIdMaquina() {
@@ -68,11 +69,11 @@ public class Maquina {
         this.descripcion = descripcion;
     }
 
-    public String getEstado() {
+    public MaquinaEstado getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(MaquinaEstado estado) {
         this.estado = estado;
     }
 
@@ -82,5 +83,9 @@ public class Maquina {
 
     public void setEjercicios(List<Ejercicio> ejercicios) {
         this.ejercicios = ejercicios;
+    }
+
+    public void addEjercicios(Ejercicio ejercicio){
+        ejercicios.add(ejercicio);
     }
 }
