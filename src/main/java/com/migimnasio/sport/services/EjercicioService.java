@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EjercicioService {
@@ -19,5 +20,9 @@ public class EjercicioService {
 
     public List<Ejercicio> getAllEjercicios(){
         return ejercicioRepository.findAll();
+    }
+
+    public Optional<Ejercicio> getById(Long id){
+        return ejercicioRepository.findById(id);
     }
 }

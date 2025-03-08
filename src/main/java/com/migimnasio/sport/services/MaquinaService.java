@@ -1,6 +1,7 @@
 package com.migimnasio.sport.services;
 
 import com.migimnasio.sport.data.MaquinaRepository;
+import com.migimnasio.sport.enums.MaquinaEstado;
 import com.migimnasio.sport.models.Maquina;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,12 @@ public class MaquinaService {
 
     public Maquina createMaquina(Maquina newMaquina){
         return maquinaRepository.save(newMaquina);
+    }
+
+    public Maquina actualizarEstadoMaquina(Long id, MaquinaEstado estado) throws Exception {
+        Maquina maquina = maquinaRepository.findById(id).orElseThrow(() -> new Exception("No se encontró Maquina"));
+        maquina.setEstado(estado);
+        maquinaRepository.save(maquina);
+        return maquina;
     }
 }

@@ -66,4 +66,8 @@ public class Ejercicio {
     public void setMaquinas(List<Maquina> maquinas) {
         this.maquinas = maquinas;
     }
+
+    public void addMaquina(Maquina maquina){
+        maquinas.add(maquina);
+    }
 }

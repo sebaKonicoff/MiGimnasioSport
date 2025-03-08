@@ -1,5 +1,6 @@
 package com.migimnasio.sport.controllers;
 
+import com.migimnasio.sport.enums.MaquinaEstado;
 import com.migimnasio.sport.models.Maquina;
 import com.migimnasio.sport.services.MaquinaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,5 +47,15 @@ public class MaquinaController {
         Maquina maquina = maquinaService.createMaquina(newMaquina);
         URI uriMaquina = ucb.path("/api/maquinas/{id}").buildAndExpand(maquina.getIdMaquina()).toUri();
         return ResponseEntity.status(HttpStatus.CREATED).location(uriMaquina).body(maquina);
+    }
+
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<?> actualizarEstadoMaquina(@PathVariable long id, @Valid @RequestBody MaquinaEstado nuevoEstado){
+        try{
+            Maquina maquina = maquinaService.actualizarEstadoMaquina(id, nuevoEstado);
+            return ResponseEntity.ok(maquina);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al actualizar el estado de maquina: " + e.getMessage());
+        }
     }
 }

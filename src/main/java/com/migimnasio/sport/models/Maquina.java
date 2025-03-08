@@ -85,7 +85,7 @@ public class Maquina {
         this.ejercicios = ejercicios;
     }
 
-    public void addEjercicios(Ejercicio ejercicio){
+    public void addEjercicio(Ejercicio ejercicio){
         ejercicios.add(ejercicio);
     }
 }
