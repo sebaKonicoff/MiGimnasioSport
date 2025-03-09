@@ -1,5 +1,6 @@
 package com.migimnasio.sport.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.migimnasio.sport.enums.AlumnoEstado;
 import jakarta.persistence.*;
 import lombok.Getter;

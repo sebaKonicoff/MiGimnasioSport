@@ -8,19 +8,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Getter
+@Setter
 public class User {
 
-    @Setter
     @Id
     @Column(unique = true, nullable = false)
     private String user;
     @Column(nullable = false)
     private String password;
-    @Setter
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    @Setter
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Alumno alumno;
 
