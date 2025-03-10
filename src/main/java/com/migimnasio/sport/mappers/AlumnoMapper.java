@@ -5,14 +5,14 @@ import com.migimnasio.sport.models.Alumno;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface AlumnoMapper {
 
-    @Mappings({
-            @Mapping(target = "usuario", ignore = true) // Opcional si estás manejando UsuarioDTO correctamente
-    })
+    @Mapping(target = "userDTO", source = "user") // Asegura que usuario → userDTO
     AlumnoDTO toDTO(Alumno alumno);
 
+    @Mapping(source = "userDTO", target = "user") // Si es bidireccional
     Alumno toEntity(AlumnoDTO alumnoDTO);
 }

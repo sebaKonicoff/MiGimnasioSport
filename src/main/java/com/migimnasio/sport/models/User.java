@@ -2,13 +2,9 @@ package com.migimnasio.sport.models;
 
 import com.migimnasio.sport.enums.Rol;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
-@Getter
-@Setter
 public class User {
 
     @Id
@@ -19,7 +15,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Alumno alumno;
 
     public User(){
@@ -43,4 +39,31 @@ public class User {
     }
 
 
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    public Alumno getAlumno() {
+        return alumno;
+    }
+
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
