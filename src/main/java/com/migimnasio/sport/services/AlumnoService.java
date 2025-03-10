@@ -59,6 +59,11 @@ public class AlumnoService {
         return toDTO(alumno);
     }
 
+    public AlumnoDTO findByUserName(String userName){
+        Alumno alumno = iAlumnoDao.findByUserName(userName);
+        return toDTO(alumno);
+    }
+
     public AlumnoDTO actualizarEstado(long id, AlumnoEstado nuevoEstado) throws Exception {
         Alumno alumno = getEntityById(id);
         alumno.setEstado(nuevoEstado);
@@ -72,5 +77,10 @@ public class AlumnoService {
         return alumnos.stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public boolean isHabilitado(String userName){
+        AlumnoDTO alumnoDTO = findByUserName(userName);
+        return alumnoDTO.getEstado() == AlumnoEstado.HABILITADO;
     }
 }

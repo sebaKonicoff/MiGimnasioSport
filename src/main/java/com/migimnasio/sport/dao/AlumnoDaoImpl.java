@@ -24,4 +24,13 @@ public class AlumnoDaoImpl implements IAlumnoDao{
 
         return alumnos;
     }
+
+    @Override
+    public Alumno findByUserName(String userName) {
+        String jpql = "SELECT a FROM Alumno a WHERE " +
+                        "a.user = :userName";
+        return entityManager.createQuery(jpql, Alumno.class)
+                .setParameter("userName", userName)
+                .getSingleResult();
+    }
 }
