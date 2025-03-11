@@ -25,4 +25,8 @@ public class EjercicioService {
     public Optional<Ejercicio> getById(Long id){
         return ejercicioRepository.findById(id);
     }
+
+    public List<Ejercicio> getEjerciciosById(List<Long> ejerciciosIds){
+        return ejercicioRepository.findAllById(ejerciciosIds);
+    }
 }

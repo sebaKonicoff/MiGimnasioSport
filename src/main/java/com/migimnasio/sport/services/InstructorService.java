@@ -39,7 +39,7 @@ public class InstructorService {
         return toDTO(nuevoInstructor);
     }
 
-    private Instructor getEntity(Long id) throws Exception {
+    public Instructor getEntityById(Long id) throws Exception {
         return instructorRepository.findById(id)
                 .orElseThrow(() -> new Exception("No se encontró Instructor"));
     }
@@ -53,7 +53,7 @@ public class InstructorService {
     }
 
     public InstructorDTO findById(Long id) throws Exception {
-        Instructor instructor = getEntity(id);
+        Instructor instructor = getEntityById(id);
         return toDTO(instructor);
     }
 }

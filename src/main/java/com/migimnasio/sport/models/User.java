@@ -1,5 +1,6 @@
 package com.migimnasio.sport.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.migimnasio.sport.enums.Rol;
 import jakarta.persistence.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,7 @@ public class User {
     private Rol rol;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Alumno alumno;
 
     public User(){

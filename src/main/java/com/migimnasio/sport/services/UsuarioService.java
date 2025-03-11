@@ -18,7 +18,7 @@ public class UsuarioService {
     private final UserMapper userMapper;
     private AlumnoService alumnoService;
 
-    private static final Logger log = LoggerFactory.getLogger(EjerMaqService.class);
+    private static final Logger log = LoggerFactory.getLogger(UsuarioService.class);
 
     public UsuarioService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;

@@ -1,6 +1,7 @@
 package com.migimnasio.sport.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.migimnasio.sport.enums.AlumnoEstado;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
@@ -26,6 +27,7 @@ public class Alumno {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_name", referencedColumnName = "user")
+    @JsonManagedReference
     private User user;
 
     public Alumno(){

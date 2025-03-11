@@ -4,6 +4,7 @@ import com.migimnasio.sport.dao.IAlumnoDao;
 import com.migimnasio.sport.data.AlumnoRepository;
 import com.migimnasio.sport.dto.AlumnoDTO;
 import com.migimnasio.sport.enums.AlumnoEstado;
+import com.migimnasio.sport.exception.ResourceNotFoundException;
 import com.migimnasio.sport.mappers.AlumnoMapper;
 import com.migimnasio.sport.models.Alumno;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,9 @@ public class AlumnoService {
         return toDTO(nuevoAlumno);
     }
 
-    private Alumno getEntityById(Long id) throws Exception {
+    public Alumno getEntityById(Long id)  {
         return alumnoRepository.findById(id)
-                .orElseThrow(() -> new Exception("No se encontró Alumno"));
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró Alumno con id: " + id));
     }
 
     public List<AlumnoDTO> getAll(){
