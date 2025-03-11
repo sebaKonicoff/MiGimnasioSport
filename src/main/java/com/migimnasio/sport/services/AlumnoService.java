@@ -55,7 +55,7 @@ public class AlumnoService {
                 .collect(Collectors.toList());
     }
 
-    public AlumnoDTO findById(Long id) throws Exception {
+    public AlumnoDTO findById(Long id) {
         Alumno alumno = getEntityById(id);
         return toDTO(alumno);
     }

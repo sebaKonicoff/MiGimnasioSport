@@ -39,14 +39,8 @@ public class AlumnoController {
             @Parameter(name = "id", description = "Id de alumno a buscar")
             Long id
     ){
-        try {
             AlumnoDTO alumnoDTO = alumnoService.findById(id);
             return ResponseEntity.ok(alumnoDTO);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null);
-        }
-
     }
 
     @PutMapping("/{id}/estado")
