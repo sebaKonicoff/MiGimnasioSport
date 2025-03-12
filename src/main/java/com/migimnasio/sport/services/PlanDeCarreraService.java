@@ -16,8 +16,6 @@ import com.migimnasio.sport.models.Instructor;
 import com.migimnasio.sport.models.PlanDeCarrera;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.lang.module.ResolutionException;
@@ -28,25 +26,24 @@ import java.util.stream.Collectors;
 @Service
 public class PlanDeCarreraService {
 
-    @Autowired
-    private AlumnoService alumnoService;
-    @Autowired
-    private InstructorService instructorService;
-    @Autowired
-    private EjercicioService ejercicioService;
-    @Autowired
-    private PlanDeCarreraRepository planDeCarreraRepository;
-    @Autowired
-    private IIntructorDao iIntructorDao;
+    private final AlumnoService alumnoService;
+    private final InstructorService instructorService;
+    private final EjercicioService ejercicioService;
+    private final PlanDeCarreraRepository planDeCarreraRepository;
+    private final IIntructorDao iIntructorDao;
 
-    @Autowired
     private PlanDeCarreraMapper planDeCarreraMapper;
 
     private final IPlanDeCarreraDao iPlanDeCarreraDao;
 
     private static final Logger log = LoggerFactory.getLogger(PlanDeCarreraService.class);
 
-    public PlanDeCarreraService(IPlanDeCarreraDao iPlanDeCarreraDao) {
+    public PlanDeCarreraService(AlumnoService alumnoService, InstructorService instructorService, EjercicioService ejercicioService, PlanDeCarreraRepository planDeCarreraRepository, IIntructorDao iIntructorDao, IPlanDeCarreraDao iPlanDeCarreraDao) {
+        this.alumnoService = alumnoService;
+        this.instructorService = instructorService;
+        this.ejercicioService = ejercicioService;
+        this.planDeCarreraRepository = planDeCarreraRepository;
+        this.iIntructorDao = iIntructorDao;
         this.iPlanDeCarreraDao = iPlanDeCarreraDao;
     }
 
