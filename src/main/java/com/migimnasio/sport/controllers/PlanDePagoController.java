@@ -1,15 +1,13 @@
 package com.migimnasio.sport.controllers;
 
 import com.migimnasio.sport.dto.PlanDePagoDTO;
-import com.migimnasio.sport.models.PlanDePago;
+import com.migimnasio.sport.dto.response.PlanDePagoResponseDTO;
+import com.migimnasio.sport.enums.PlanPagoEstado;
 import com.migimnasio.sport.services.PlanDePagoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/planpago")
@@ -20,8 +18,17 @@ public class PlanDePagoController {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> crearPlanDePago(@RequestBody PlanDePagoDTO planDePagoDTO){
-        //CAMBIAR PARA QUE DEVUELVA UN PLANDEPAGORESPONSEDTO
-        PlanDePago response = planDePagoService.crearPlanDePago(planDePagoDTO);
+        PlanDePagoResponseDTO response = planDePagoService.crearPlanDePago(planDePagoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/{id}/estado")
+    public ResponseEntity<?> actualizarEstadoPlanPago(@PathVariable Long id, @RequestParam PlanPagoEstado nuevoEstado){
+        try {
+            PlanDePagoResponseDTO response = planDePagoService.actualizarPlanDePago(id,nuevoEstado);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al actualizar el estado.");
+        }
     }
 }

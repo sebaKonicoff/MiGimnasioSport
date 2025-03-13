@@ -2,7 +2,6 @@ package com.migimnasio.sport.controllers;
 
 import com.migimnasio.sport.dto.PlanDeCarreraDTO;
 import com.migimnasio.sport.dto.response.PlanDeCarreraResponseDTO;
-import com.migimnasio.sport.models.PlanDeCarrera;
 import com.migimnasio.sport.services.PlanDeCarreraService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

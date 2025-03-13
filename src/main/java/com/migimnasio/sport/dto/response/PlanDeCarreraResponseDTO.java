@@ -19,7 +19,8 @@ public class PlanDeCarreraResponseDTO {
     private String descripcion;
     private PlanDeCarreraEstado estado;
 
-    public PlanDeCarreraResponseDTO(Long idPlanDeCarrera, AlumnoDTO alumnoDTO, InstructorDTO instructorDTO, List<Long> ejerciciosId, String metaAlumno, int cantDiasXSemana, LocalDate fechaInicio, LocalDate fechaFin, String descripcion, PlanDeCarreraEstado estado) {
+    public PlanDeCarreraResponseDTO(Long idPlanDeCarrera, AlumnoDTO alumnoDTO, InstructorDTO instructorDTO, List<Long> ejerciciosId, String metaAlumno,
+                                    int cantDiasXSemana, LocalDate fechaInicio, LocalDate fechaFin, String descripcion, PlanDeCarreraEstado estado) {
         this.idPlanDeCarrera = idPlanDeCarrera;
         this.alumnoDTO = alumnoDTO;
         this.instructorDTO = instructorDTO;
