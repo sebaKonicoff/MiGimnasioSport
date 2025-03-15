@@ -2,6 +2,7 @@ package com.migimnasio.sport.services;
 
 import com.migimnasio.sport.data.InstructorRepository;
 import com.migimnasio.sport.dto.InstructorDTO;
+import com.migimnasio.sport.exception.ResourceNotFoundException;
 import com.migimnasio.sport.mappers.InstructorMapper;
 import com.migimnasio.sport.models.Instructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,9 @@ public class InstructorService {
         return toDTO(nuevoInstructor);
     }
 
-    public Instructor getEntityById(Long id) throws Exception {
+    public Instructor getEntityById(Long id){
         return instructorRepository.findById(id)
-                .orElseThrow(() -> new Exception("No se encontró Instructor"));
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró Instructor"));
     }
 
     public List<InstructorDTO> getAllInstructor(){

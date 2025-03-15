@@ -7,6 +7,7 @@ import com.migimnasio.sport.dto.AlumnoDTO;
 import com.migimnasio.sport.dto.InstructorDTO;
 import com.migimnasio.sport.dto.PlanDeCarreraDTO;
 import com.migimnasio.sport.dto.response.PlanDeCarreraResponseDTO;
+import com.migimnasio.sport.enums.PlanDeCarreraEstado;
 import com.migimnasio.sport.exception.ResourceNotFoundException;
 import com.migimnasio.sport.exception.ValidationException;
 import com.migimnasio.sport.mappers.PlanDeCarreraMapper;
@@ -55,6 +56,11 @@ public class PlanDeCarreraService {
         return planDeCarreraMapper.toEntity(planDeCarreraDTO);
     }
 
+    private PlanDeCarrera getEntity(Long id){
+        return planDeCarreraRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No se econtró Plan de Carrera."));
+    }
+
     public PlanDeCarreraResponseDTO crearPlanDeCarrera(PlanDeCarreraDTO planDeCarreraDTO){
         try {
             log.info("Iniciando creación Plan de carrera");
@@ -91,18 +97,7 @@ public class PlanDeCarreraService {
                     .map(Ejercicio::getIdEjercicio)
                     .collect(Collectors.toList());
 
-            return new PlanDeCarreraResponseDTO(
-                    savedPlanDeCarrera.getIdPlanCarrera(),
-                    alumnoDTO,
-                    instructorDTO,
-                    ejerciciosIds,
-                    savedPlanDeCarrera.getMetaAlumno(),
-                    savedPlanDeCarrera.getCantDiasXSemana(),
-                    savedPlanDeCarrera.getFechaInicio(),
-                    savedPlanDeCarrera.getFechaFin(),
-                    savedPlanDeCarrera.getDescripcion(),
-                    savedPlanDeCarrera.getEstado()
-            );
+            return crearEntidadResponseDTO(savedPlanDeCarrera, alumnoDTO, instructorDTO, ejerciciosIds);
 
         }catch (ResourceNotFoundException ex){
             log.error("No se encontró recurso. " + ex.getMessage());
@@ -117,6 +112,12 @@ public class PlanDeCarreraService {
         }
     }
 
+    public PlanDeCarrera actualizarEstado(Long id, PlanDeCarreraEstado estado){
+        PlanDeCarrera planDeCarrera = getEntity(id);
+        planDeCarrera.setEstado(estado);
+        planDeCarreraRepository.save(planDeCarrera);
+        return planDeCarrera;
+    }
 
     private void validarPlanDeCarrera(PlanDeCarreraDTO planDeCarreraDTO,
                                       Optional<PlanDeCarrera> planExistente,
@@ -152,5 +153,20 @@ public class PlanDeCarreraService {
         }
 
         log.info("Validaciones del Plan de Carrera completadas exitosamente");
+    }
+
+    private PlanDeCarreraResponseDTO crearEntidadResponseDTO(PlanDeCarrera planDeCarrera, AlumnoDTO alumnoDTO, InstructorDTO instructorDTO, List<Long> ejerciciosIds){
+        return new PlanDeCarreraResponseDTO(
+                planDeCarrera.getIdPlanCarrera(),
+                alumnoDTO,
+                instructorDTO,
+                ejerciciosIds,
+                planDeCarrera.getMetaAlumno(),
+                planDeCarrera.getCantDiasXSemana(),
+                planDeCarrera.getFechaInicio(),
+                planDeCarrera.getFechaFin(),
+                planDeCarrera.getDescripcion(),
+                planDeCarrera.getEstado()
+        );
     }
 }
