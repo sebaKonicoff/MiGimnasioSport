@@ -29,4 +29,12 @@ public class EjercicioService {
     public List<Ejercicio> getEjerciciosById(List<Long> ejerciciosIds){
         return ejercicioRepository.findAllById(ejerciciosIds);
     }
+
+    public Ejercicio crearEjercicio(Ejercicio ejercicio){
+        try {
+            return ejercicioRepository.save(ejercicio);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -11,10 +11,7 @@ import com.migimnasio.sport.enums.PlanDeCarreraEstado;
 import com.migimnasio.sport.exception.ResourceNotFoundException;
 import com.migimnasio.sport.exception.ValidationException;
 import com.migimnasio.sport.mappers.PlanDeCarreraMapper;
-import com.migimnasio.sport.models.Alumno;
-import com.migimnasio.sport.models.Ejercicio;
-import com.migimnasio.sport.models.Instructor;
-import com.migimnasio.sport.models.PlanDeCarrera;
+import com.migimnasio.sport.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -74,22 +71,14 @@ public class PlanDeCarreraService {
 
             List<Ejercicio> ejercicios = ejercicioService.getEjerciciosById(planDeCarreraDTO.getEjerciciosIds());
 
-
             validarPlanDeCarrera(planDeCarreraDTO, planExistente, instructorExistente, ejercicios);
 
-            log.info("Se procede a crear Plan de Carrera");
-            PlanDeCarrera planDeCarrera = new PlanDeCarrera();
-            planDeCarrera.setAlumno(alumno);
-            planDeCarrera.setInstructor(instructor);
-            planDeCarrera.setEjercicios(ejercicios);
-            planDeCarrera.setMetaAlumno(planDeCarreraDTO.getMetaAlumno());
-            planDeCarrera.setCantDiasXSemana(planDeCarreraDTO.getCantDiasXSemana());
-            planDeCarrera.setFechaInicio(planDeCarreraDTO.getFechaInicio());
-            planDeCarrera.setFechaFin(planDeCarreraDTO.getFechaFin());
-            planDeCarrera.setDescripcion(planDeCarreraDTO.getDescripcion());
-            planDeCarrera.setEstado(planDeCarreraDTO.getEstado());
+            //Se crea el plan de carrera
+            PlanDeCarrera planDeCarrera = crearEntidadPlanDeCarrera(planDeCarreraDTO, alumno, instructor, ejercicios);
+
 
             PlanDeCarrera savedPlanDeCarrera = planDeCarreraRepository.save(planDeCarrera);
+
 
             AlumnoDTO alumnoDTO = alumnoService.toDTO(alumno);
             InstructorDTO instructorDTO = instructorService.toDTO(instructor);
@@ -168,5 +157,21 @@ public class PlanDeCarreraService {
                 planDeCarrera.getDescripcion(),
                 planDeCarrera.getEstado()
         );
+    }
+
+    private PlanDeCarrera crearEntidadPlanDeCarrera(PlanDeCarreraDTO planDeCarreraDTO, Alumno alumno, Instructor instructor, List<Ejercicio> ejercicios){
+        log.info("Se procede a crear Plan de Carrera");
+        PlanDeCarrera planDeCarrera = new PlanDeCarrera();
+        planDeCarrera.setAlumno(alumno);
+        planDeCarrera.setInstructor(instructor);
+        planDeCarrera.setEjercicios(ejercicios);
+        planDeCarrera.setMetaAlumno(planDeCarreraDTO.getMetaAlumno());
+        planDeCarrera.setCantDiasXSemana(planDeCarreraDTO.getCantDiasXSemana());
+        planDeCarrera.setFechaInicio(planDeCarreraDTO.getFechaInicio());
+        planDeCarrera.setFechaFin(planDeCarreraDTO.getFechaFin());
+        planDeCarrera.setDescripcion(planDeCarreraDTO.getDescripcion());
+        planDeCarrera.setEstado(planDeCarreraDTO.getEstado());
+
+        return planDeCarrera;
     }
 }

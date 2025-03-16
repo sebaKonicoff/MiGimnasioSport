@@ -1,5 +1,6 @@
-package com.migimnasio.sport.dao;
+package com.migimnasio.sport.dao.impl;
 
+import com.migimnasio.sport.dao.IPlanDeCarreraDao;
 import com.migimnasio.sport.models.PlanDeCarrera;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class PlanDeCarreraDaoImpl implements IPlanDeCarreraDao{
+public class PlanDeCarreraDaoImpl implements IPlanDeCarreraDao {
 
     @PersistenceContext
     private EntityManager entityManager;
