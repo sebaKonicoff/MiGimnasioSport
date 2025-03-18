@@ -17,25 +17,15 @@ public class UserController {
 
     @GetMapping("/{userName}")
     public ResponseEntity<?> findById(@PathVariable String userName){
-        try{
-            UserDTO userDTO = usuarioService.findById(userName);
-            return ResponseEntity.ok(userDTO);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Usuario no encontrado.");
-        }
+        UserDTO userDTO = usuarioService.findById(userName);
+        return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping("/{userName}/{password}")
     public ResponseEntity<?> Login(@PathVariable String userName,
                          @PathVariable String password){
-        try{
-            Boolean isUser = usuarioService.login(userName, password);
-            return ResponseEntity.ok(isUser);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Usario y/o contraseña incorrecto");
-        }
+        Boolean isUser = usuarioService.login(userName, password);
+        return ResponseEntity.ok(isUser);
     }
 
     @PutMapping("/user/password")

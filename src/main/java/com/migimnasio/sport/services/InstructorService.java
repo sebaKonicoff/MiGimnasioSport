@@ -53,7 +53,7 @@ public class InstructorService {
                 .collect(Collectors.toList());
     }
 
-    public InstructorDTO findById(Long id) throws Exception {
+    public InstructorDTO findById(Long id){
         Instructor instructor = getEntityById(id);
         return toDTO(instructor);
     }

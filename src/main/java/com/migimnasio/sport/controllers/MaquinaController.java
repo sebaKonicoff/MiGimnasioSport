@@ -51,11 +51,7 @@ public class MaquinaController {
 
     @PutMapping("/{id}/estado")
     public ResponseEntity<?> actualizarEstadoMaquina(@PathVariable long id, @Valid @RequestBody MaquinaEstado nuevoEstado){
-        try{
             Maquina maquina = maquinaService.actualizarEstadoMaquina(id, nuevoEstado);
             return ResponseEntity.ok(maquina);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error al actualizar el estado de maquina: " + e.getMessage());
-        }
     }
 }

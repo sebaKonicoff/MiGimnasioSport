@@ -45,12 +45,8 @@ public class AlumnoController {
 
     @PutMapping("/{id}/estado")
     public ResponseEntity<?> actualizarEstadoAlumno(@PathVariable long id, @RequestParam AlumnoEstado nuevoEstado){
-        try {
             AlumnoDTO alumnoDTO = alumnoService.actualizarEstado(id, nuevoEstado);
             return ResponseEntity.ok(alumnoDTO);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error al actualizar el estado del alumno: " + e.getMessage());
-        }
     }
 
     @GetMapping("/estado/{estado}")

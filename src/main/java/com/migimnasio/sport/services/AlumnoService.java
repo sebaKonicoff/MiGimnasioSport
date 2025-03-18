@@ -65,7 +65,7 @@ public class AlumnoService {
         return toDTO(alumno);
     }
 
-    public AlumnoDTO actualizarEstado(long id, AlumnoEstado nuevoEstado) throws Exception {
+    public AlumnoDTO actualizarEstado(long id, AlumnoEstado nuevoEstado){
         Alumno alumno = getEntityById(id);
         alumno.setEstado(nuevoEstado);
         alumnoRepository.save(alumno);

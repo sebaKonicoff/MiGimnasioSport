@@ -2,6 +2,7 @@ package com.migimnasio.sport.services;
 
 import com.migimnasio.sport.data.UserRepository;
 import com.migimnasio.sport.dto.UserDTO;
+import com.migimnasio.sport.exception.ResourceNotFoundException;
 import com.migimnasio.sport.mappers.UserMapper;
 import com.migimnasio.sport.models.User;
 import org.slf4j.Logger;
@@ -33,18 +34,18 @@ public class UsuarioService {
         return userMapper.toEntity(userDTO);
     }
 
-    private User getEntityByUserName(String userName) throws Exception {
+    private User getEntityByUserName(String userName){
         return userRepository.findById(userName)
-                .orElseThrow(() -> new Exception("No se encontró User"));
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró User"));
     }
 
-    public UserDTO findById(String userName) throws Exception {
+    public UserDTO findById(String userName) {
         User user = getEntityByUserName(userName);
         return toDTO(user);
 
     }
 
-    public boolean login(String userName, String password) throws Exception {
+    public boolean login(String userName, String password)  {
         User user = getEntityByUserName(userName);
         return user.checkPassword(password);
     }

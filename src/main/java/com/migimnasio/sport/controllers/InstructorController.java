@@ -34,12 +34,7 @@ public class InstructorController {
             @Parameter(name = "id", description = "Id de instructor a buscar")
             Long id
     ){
-        try {
             InstructorDTO instructorDTO = instructorService.findById(id);
             return ResponseEntity.ok(instructorDTO);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No se encontró Instructor");
-        }
     }
 }

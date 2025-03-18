@@ -24,11 +24,7 @@ public class PlanDePagoController {
 
     @PutMapping("/{id}/estado")
     public ResponseEntity<?> actualizarEstadoPlanPago(@PathVariable Long id, @RequestParam PlanPagoEstado nuevoEstado){
-        try {
-            PlanDePagoResponseDTO response = planDePagoService.actualizarPlanDePago(id,nuevoEstado);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error al actualizar el estado.");
-        }
+        PlanDePagoResponseDTO response = planDePagoService.actualizarPlanDePago(id,nuevoEstado);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

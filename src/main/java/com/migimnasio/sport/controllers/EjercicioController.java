@@ -21,12 +21,8 @@ public class EjercicioController {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> crearEjercicio(@RequestBody Ejercicio ejercicio){
-        try {
-            Ejercicio response = ejercicioService.crearEjercicio(ejercicio);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error al intentar crear Ejercicio");
-        }
+        Ejercicio response = ejercicioService.crearEjercicio(ejercicio);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
