@@ -21,7 +21,6 @@ public class PlanDeCarrera {
     @JoinColumn(name = "id_intructor", referencedColumnName = "idInstructor", unique = false)
     private Instructor instructor;
     @OneToMany
-    @JoinColumn(name = "id_plan_de_carrera") // Especificar la clave foránea en la tabla `ejercicios`
     @Column(nullable = false)
     private List<Ejercicio> ejercicios;
     private String metaAlumno;

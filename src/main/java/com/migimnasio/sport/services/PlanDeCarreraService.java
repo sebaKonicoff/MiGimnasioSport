@@ -1,6 +1,7 @@
 package com.migimnasio.sport.services;
 
 import com.migimnasio.sport.dao.IIntructorDao;
+import com.migimnasio.sport.dao.IPlanCarreraEjercicioDao;
 import com.migimnasio.sport.dao.IPlanDeCarreraDao;
 import com.migimnasio.sport.data.PlanDeCarreraRepository;
 import com.migimnasio.sport.dto.AlumnoDTO;
@@ -14,6 +15,7 @@ import com.migimnasio.sport.mappers.PlanDeCarreraMapper;
 import com.migimnasio.sport.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.module.ResolutionException;
@@ -30,18 +32,21 @@ public class PlanDeCarreraService {
     private final PlanDeCarreraRepository planDeCarreraRepository;
     private final IIntructorDao iIntructorDao;
 
+    private final PlanCarreraEjercicioService planCEjercicioService;
+
     private PlanDeCarreraMapper planDeCarreraMapper;
 
     private final IPlanDeCarreraDao iPlanDeCarreraDao;
 
     private static final Logger log = LoggerFactory.getLogger(PlanDeCarreraService.class);
 
-    public PlanDeCarreraService(AlumnoService alumnoService, InstructorService instructorService, EjercicioService ejercicioService, PlanDeCarreraRepository planDeCarreraRepository, IIntructorDao iIntructorDao, IPlanDeCarreraDao iPlanDeCarreraDao) {
+    public PlanDeCarreraService(AlumnoService alumnoService, InstructorService instructorService, EjercicioService ejercicioService, PlanDeCarreraRepository planDeCarreraRepository, IIntructorDao iIntructorDao, PlanCarreraEjercicioService planCEjercicioService, IPlanDeCarreraDao iPlanDeCarreraDao) {
         this.alumnoService = alumnoService;
         this.instructorService = instructorService;
         this.ejercicioService = ejercicioService;
         this.planDeCarreraRepository = planDeCarreraRepository;
         this.iIntructorDao = iIntructorDao;
+        this.planCEjercicioService = planCEjercicioService;
         this.iPlanDeCarreraDao = iPlanDeCarreraDao;
     }
 
@@ -76,9 +81,11 @@ public class PlanDeCarreraService {
             //Se crea el plan de carrera
             PlanDeCarrera planDeCarrera = crearEntidadPlanDeCarrera(planDeCarreraDTO, alumno, instructor, ejercicios);
 
-
             PlanDeCarrera savedPlanDeCarrera = planDeCarreraRepository.save(planDeCarrera);
 
+            log.info("Se procede a insertar los ejercicios en tabla");
+            planCEjercicioService.insertarEjercicios(planDeCarrera.getIdPlanCarrera(), ejercicios);
+            log.info("Ejercicios insertados");
 
             AlumnoDTO alumnoDTO = alumnoService.toDTO(alumno);
             InstructorDTO instructorDTO = instructorService.toDTO(instructor);
