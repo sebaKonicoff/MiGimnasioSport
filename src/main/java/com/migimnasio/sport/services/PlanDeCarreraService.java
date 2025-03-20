@@ -67,16 +67,11 @@ public class PlanDeCarreraService {
         try {
             log.info("Iniciando creación Plan de carrera");
 
-            log.info("Se obtienen las entidades correspondientes para las validaciones.");
-            Optional<PlanDeCarrera> planExistente = iPlanDeCarreraDao.existeByAlumnoAndEstado(planDeCarreraDTO.getIdAlumno());
-            Alumno alumno = alumnoService.getEntityById(planDeCarreraDTO.getIdAlumno());
-
-            Optional<Instructor> instructorExistente = iIntructorDao.existeInstructor(planDeCarreraDTO.getIdInstructor());
-            Instructor instructor = instructorService.getEntityById(planDeCarreraDTO.getIdInstructor());
-
             List<Ejercicio> ejercicios = ejercicioService.getEjerciciosById(planDeCarreraDTO.getEjerciciosIds());
+            validarPlanDeCarrera(planDeCarreraDTO, ejercicios);
 
-            validarPlanDeCarrera(planDeCarreraDTO, planExistente, instructorExistente, ejercicios);
+            Alumno alumno = alumnoService.getEntityById(planDeCarreraDTO.getIdAlumno());
+            Instructor instructor = instructorService.getEntityById(planDeCarreraDTO.getIdInstructor());
 
             //Se crea el plan de carrera
             PlanDeCarrera planDeCarrera = crearEntidadPlanDeCarrera(planDeCarreraDTO, alumno, instructor, ejercicios);
@@ -115,10 +110,13 @@ public class PlanDeCarreraService {
         return planDeCarrera;
     }
 
-    private void validarPlanDeCarrera(PlanDeCarreraDTO planDeCarreraDTO,
-                                      Optional<PlanDeCarrera> planExistente,
-                                      Optional<Instructor> instructorExistente,
-                                      List<Ejercicio> ejercicios) {
+    private void validarPlanDeCarrera(PlanDeCarreraDTO planDeCarreraDTO, List<Ejercicio> ejercicios) {
+
+        log.info("Se obtienen las entidades correspondientes para las validaciones.");
+
+        Optional<PlanDeCarrera> planExistente = iPlanDeCarreraDao.existeByAlumnoAndEstado(planDeCarreraDTO.getIdAlumno());
+
+        Optional<Instructor> instructorExistente = iIntructorDao.existeInstructor(planDeCarreraDTO.getIdInstructor());
 
         log.info("Iniciando validaciones para la creación del Plan de Carrera");
 

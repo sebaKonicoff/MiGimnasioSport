@@ -33,6 +33,5 @@ public class PlanDeCarreraController implements IPlanDeCarrera{
     public ResponseEntity<?> actualizarEstadoPlanDeCarrera(@PathVariable Long id, @RequestParam PlanDeCarreraEstado planDeCarreraEstado){
         PlanDeCarrera planDeCarrera = planDeCarreraService.actualizarEstado(id, planDeCarreraEstado);
         return ResponseEntity.status(HttpStatus.OK).body(planDeCarrera);
-        //return ResponseEntity.badRequest().body("Error al actualziar el estado del Plan de carrera");
     }
 }
